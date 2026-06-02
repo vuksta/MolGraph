@@ -12,9 +12,9 @@ Given only a molecule's SMILES string, the models predict its aqueous solubility
  
 We train and compare three architectures under identical conditions to see whether explicitly encoding molecular topology actually helps:
  
-- **MLP** — Morgan fingerprints (radius 2, 2048 bits), no topology
-- **GCN** — molecule as a graph, edges treated equally
-- **GAT** — molecule as a graph, edge weights learned via attention
+- **MLP** - Morgan fingerprints (radius 2, 2048 bits), no topology
+- **GCN** - molecule as a graph, edges treated equally
+- **GAT** - molecule as a graph, edge weights learned via attention
   
 The same dataset, same 80/10/10 split (seed=42), same Adam optimizer, same early stopping. The only thing that changes is the architecture.
  
