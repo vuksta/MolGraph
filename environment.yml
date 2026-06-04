@@ -8,19 +8,18 @@ channels:
 dependencies:
   - python=3.11
 
-  # PyTorch (CPU-only by default).
-  # For NVIDIA GPU: remove `cpuonly` and add `pytorch-cuda=12.1` (or your CUDA version),
+  # PyTorch — CPU-only by default.
+  # For an NVIDIA GPU: remove `cpuonly`, add `pytorch-cuda=12.1` (match your driver),
   # and add `nvidia` to the channels list above.
   - pytorch
   - torchvision
   - torchaudio
   - cpuonly
 
-  # PyTorch Geometric and its compiled deps (must come from the `pyg` channel)
+  # PyTorch Geometric (core — from the `pyg` channel)
+  # pytorch-scatter/sparse/cluster are intentionally omitted: the conda builds require
+  # CUDA libs even in CPU-only setups. GCNConv and GATConv work correctly without them.
   - pyg
-  - pytorch-scatter
-  - pytorch-sparse
-  - pytorch-cluster
 
   # Chemistry / featurization
   - rdkit
@@ -33,9 +32,12 @@ dependencies:
   - seaborn
   - tqdm
 
-  # Notebook + Spyder IDE support
+  # Notebook support
   - jupyter
   - jupyterlab
   - ipykernel
+  - ipywidgets
+
+  # Spyder IDE
   - spyder
   - spyder-kernels
