@@ -1,0 +1,41 @@
+name: molgraph
+channels:
+  - pyg
+  - pytorch
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.11
+
+  # PyTorch (CPU-only by default).
+  # For NVIDIA GPU: remove `cpuonly` and add `pytorch-cuda=12.1` (or your CUDA version),
+  # and add `nvidia` to the channels list above.
+  - pytorch
+  - torchvision
+  - torchaudio
+  - cpuonly
+
+  # PyTorch Geometric and its compiled deps (must come from the `pyg` channel)
+  - pyg
+  - pytorch-scatter
+  - pytorch-sparse
+  - pytorch-cluster
+
+  # Chemistry / featurization
+  - rdkit
+
+  # Core data / ML stack
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - tqdm
+
+  # Notebook + Spyder IDE support
+  - jupyter
+  - jupyterlab
+  - ipykernel
+  - spyder
+  - spyder-kernels
