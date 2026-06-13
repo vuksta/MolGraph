@@ -6,6 +6,7 @@ Created on Fri Jun  5 22:58:42 2026
 @author: vuk
 """
 
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import torch
@@ -177,7 +178,22 @@ def plot_predictions(y_true, y_pred, r2, rmse):
     plt.title(f"Test set  (R²={r2:.3f}, RMSE={rmse:.2f})")
     plt.tight_layout(); plt.show()
     
-CSV_PATH = "/home/vuk/Faks/MITNOP/MolGraph/data/raw/curated-solubility-dataset.csv"
+def _find_project_root():
+    """Pronalazi koren projekta (folder koji sadrži data/raw).
+    Radi i kao skripta i u Spyder ćelijama, na Windows-u i Linux-u."""
+    candidates = []
+    try:
+        candidates.append(Path(__file__).resolve())   # kada se pokreće kao fajl
+    except NameError:
+        pass
+    candidates.append(Path.cwd().resolve())            # kada se pokreće po ćelijama
+    for start in candidates:
+        for p in [start, *start.parents]:
+            if (p / "data" / "raw").is_dir():
+                return p
+    raise RuntimeError("Ne mogu da pronađem koren projekta MolGraph (nedostaje data/raw).")
+
+CSV_PATH = _find_project_root() / "data" / "raw" / "curated-solubility-dataset.csv"
 
 smiles, solubility = loadData(CSV_PATH)          
 X, y = buildDataSet(smiles, solubility)         

@@ -19,8 +19,24 @@ print("Biblioteke uspešno uvezene.")
  
 # %% Konfiguracija
  
-DATA_PATH   = "/home/vuk/Faks/MITNOP/MolGraph/data/raw/curated-solubility-dataset.csv"
-FIGURES_DIR = Path("/home/vuk/Faks/MITNOP/MolGraph/figures")
+def _find_project_root():
+    """Pronalazi koren projekta (folder koji sadrži data/raw).
+    Radi i kao skripta i u Spyder ćelijama, na Windows-u i Linux-u."""
+    candidates = []
+    try:
+        candidates.append(Path(__file__).resolve())   # kada se pokreće kao fajl
+    except NameError:
+        pass
+    candidates.append(Path.cwd().resolve())            # kada se pokreće po ćelijama
+    for start in candidates:
+        for p in [start, *start.parents]:
+            if (p / "data" / "raw").is_dir():
+                return p
+    raise RuntimeError("Ne mogu da pronađem koren projekta MolGraph (nedostaje data/raw).")
+
+PROJECT_ROOT = _find_project_root()
+DATA_PATH   = PROJECT_ROOT / "data" / "raw" / "curated-solubility-dataset.csv"
+FIGURES_DIR = PROJECT_ROOT / "figures"
 SEED        = 42
 SPLIT_VAL   = 0.10      # 10% test skup
 SPLIT_TEST  = 0.1111    # 10% od preostalih 90% ≈ 10% ukupno
